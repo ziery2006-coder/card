@@ -2,197 +2,198 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday 🐶🎂</title>
+<title>Chúc mừng sinh nhật 🎂</title>
+
 <style>
-body{
-    margin:0;
-    font-family:'Comic Sans MS',sans-serif;
-    background:linear-gradient(135deg,#ffe6f0,#e6f7ff);
-    overflow:hidden;
-    text-align:center;
+body {
+    margin: 0;
+    font-family: 'Comic Sans MS', sans-serif;
+    background: linear-gradient(135deg, #ffe6f0, #e6f7ff);
+    overflow: hidden;
+    text-align: center;
 }
-.screen{
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+
+.screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.hidden{display:none;}
-button{
-    padding:15px 30px;
-    margin:10px;
-    border:none;
-    border-radius:30px;
-    font-size:1.1em;
-    cursor:pointer;
-    background:#ff90b3;
-    color:white;
+
+h1 {
+    font-size: 2.5em;
+    color: #ff4d6d;
+    margin-bottom: 10px;
 }
-.big{font-size:1.4em;background:#ff4d6d;}
-canvas{
-    background:#fff;
-    border:4px dashed #ff90b3;
-    border-radius:20px;
+
+.from {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 20px;
 }
-input,textarea{
-    padding:15px;
-    font-size:1em;
-    border-radius:15px;
-    border:2px solid #ff4d6d;
-    width:300px;
+
+.message {
+    font-size: 1.3em;
+    max-width: 600px;
+    margin-bottom: 30px;
 }
-.explode{animation:boom 1s forwards;}
-@keyframes boom{
-    to{transform:scale(5);opacity:0;}
+
+.dog {
+    font-size: 80px;
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 10px;
+    background: #ff90b3;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.big {
+    font-size: 1.4em;
+    padding: 20px 40px;
+    background: #ff4d6d;
+}
+
+.dog-rain {
+    position: absolute;
+    top: -50px;
+    font-size: 40px;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+input {
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    border: 2px solid #ff4d6d;
+    width: 280px;
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.explode {
+    animation: explode 1s forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(5); opacity: 0; }
 }
 </style>
 </head>
-<body>
 
-<!-- MUSIC -->
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8c2c6a9d7a.mp3">
-</audio>
+<body>
 
 <!-- SCREEN 1 -->
 <div class="screen" id="screen1">
-  <h1>🎉 Chúc mừng sinh nhật 🎉</h1>
-  <p>Muốn mở quà thì giúp chó về đích 🐶🏁</p>
-  <button onclick="toggleMusic()">🎵 Bật / Tắt nhạc</button>
-  <button class="big" onclick="startGame()">🐕 Chơi game</button>
+    <div class="dog">🐶</div>
+    <h1>Chúc mừng sinh nhật 🎉</h1>
+    <div class="from">Người gửi: <b>BẠN THÂN SIÊU CẤP</b></div>
+    <div class="message">
+        Chúc bạn tuổi mới luôn vui vẻ, ăn không béo, ngủ không mộng,
+        tiền vào như nước và luôn có chó con trong tim 🐕💖
+    </div>
+
+    <button onclick="dogRain()">🌧️ Mưa chó con</button>
+    <button class="big" onclick="openGift()">🎁 MỞ QUÀ SINH NHẬT</button>
 </div>
 
-<!-- GAME -->
-<div class="screen hidden" id="gameScreen">
-  <h2>SPACE / chạm để nhảy</h2>
-  <canvas id="game" width="600" height="200"></canvas>
+<!-- SCREEN 2 -->
+<div class="screen hidden" id="screen2">
+    <h1>📚 Quà bí mật nè</h1>
+    <p>Hãy ghi <b>1 thể loại sách bạn thích</b></p>
+    <input id="bookInput" placeholder="VD: Tiểu thuyết, fantasy...">
+    <div>
+        <button onclick="submitBook()">Gửi</button>
+        <button onclick="fakeSkip()">Không ghi gì</button>
+    </div>
 </div>
-
-<!-- BOOK -->
-<div class="screen hidden" id="giftScreen">
-  <h2>📚 Ghi 1 thể loại sách bạn thích</h2>
-  <input id="book" placeholder="VD: Tiểu thuyết...">
-  <div>
-    <button onclick="submitBook()">Gửi</button>
-    <button onclick="alert('😈 Không có chuyện đó đâu!')">Không ghi gì</button>
-  </div>
-</div>
-
-<!-- MESSAGE INPUT -->
-<div class="screen hidden" id="messageInputScreen">
-  <h2>💌 Bạn có muốn để lại lời nhắn cho người này không?</h2>
-  <textarea id="guestMessage" placeholder="Viết gì đó dễ thương nha~"></textarea>
-  <div>
-    <button onclick="submitGuestMessage()">Gửi lời nhắn</button>
-    <button onclick="skipGuestMessage()">Bỏ qua</button>
-  </div>
-</div>
-
-<!-- FINAL -->
-<div class="screen hidden" id="finalMessageScreen"></div>
 
 <script>
-/* ===== GOOGLE FORM ===== */
-const FORM_ID = "FORM_ID_CUA_BAN";
-const ENTRY_ID = "123456789";
+/* ===== GOOGLE FORM (TÙY CHỌN) ===== */
+const FORM_ID = "1FAIpQLSf9WI408WMOCyTLq_ansDAazkJWZOR6rL2NnArRcSJxaMhCKA";   // ví dụ: 1FAIpQLSfxxxx
+const ENTRY_ID = "1858201258";        // entry.xxxxx
 
-function sendToGoogleForm(message){
-  const url=`https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
-  const data=new URLSearchParams();
-  data.append(entry.${ENTRY_ID},message);
-  fetch(url,{method:"POST",mode:"no-cors",body:data});
+function sendToGoogleForm(value){
+    if (FORM_ID === "FORM_ID_CUA_BAN") return;
+
+    const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+    const data = new URLSearchParams();
+    data.append(`entry.${ENTRY_ID}`, value);
+
+    fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        body: data
+    });
 }
 
-/* ===== MUSIC ===== */
-function toggleMusic(){
-  const m=document.getElementById("music");
-  m.paused?m.play():m.pause();
+/* ===== EFFECT ===== */
+function dogRain() {
+    for (let i = 0; i < 30; i++) {
+        let dog = document.createElement("div");
+        dog.innerText = "🐶";
+        dog.className = "dog-rain";
+        dog.style.left = Math.random() * 100 + "vw";
+        dog.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(dog);
+        setTimeout(() => dog.remove(), 4000);
+    }
 }
 
-/* ===== GAME ===== */
-const c=document.getElementById("game");
-const ctx=c.getContext("2d");
-let dog={x:50,y:150,vy:0};
-let obs={x:600};
-let playing=false;
-
-function startGame(){
-  screen1.classList.add("hidden");
-  gameScreen.classList.remove("hidden");
-  playing=true;
-  loop();
-}
-function loop(){
-  if(!playing) return;
-  ctx.clearRect(0,0,600,200);
-  dog.vy+=0.8; dog.y+=dog.vy;
-  if(dog.y>150){dog.y=150;dog.vy=0;}
-  obs.x-=4; if(obs.x<0) obs.x=600;
-  ctx.font="40px serif";
-  ctx.fillText("🐶",dog.x,dog.y);
-  ctx.fillText("🪵",obs.x,160);
-  ctx.fillText("🏁",520,160);
-  if(obs.x<dog.x+30 && obs.x>dog.x-30 && dog.y>130){
-    alert("💥 Thua rồi!");
-    obs.x=600;
-  }
-  if(dog.x>500){
-    playing=false;
-    gameScreen.classList.add("hidden");
-    giftScreen.classList.remove("hidden");
-    return;
-  }
-  dog.x+=1;
-  requestAnimationFrame(loop);
-}
-addEventListener("keydown",e=>{
-  if(e.code==="Space"&&dog.y>=150) dog.vy=-12;
-});
-addEventListener("touchstart",()=>{
-  if(dog.y>=150) dog.vy=-12;
-});
-
-/* ===== BOOK ===== */
-function submitBook(){
-  if(!book.value.trim()){
-    alert("📚 Ghi vào đi mà~"); return;
-  }
-  giftScreen.classList.add("explode");
-  setTimeout(()=>{
-    giftScreen.classList.add("hidden");
-    messageInputScreen.classList.remove("hidden");
-  },600);
+function openGift() {
+    document.getElementById("screen1").classList.add("hidden");
+    document.getElementById("screen2").classList.remove("hidden");
 }
 
-/* ===== MESSAGE ===== */
-const defaultMessage=`💌 Lời nhắn dành cho bạn
-
-Chúc mừng sinh nhật 🎂
-Mong là hôm nay bạn thấy mình được yêu thương.
-Cứ là bạn thôi, thế là đủ rồi 🐶✨`;
-
-function submitGuestMessage(){
-  const msg=guestMessage.value.trim();
-  if(!msg){alert("💌 Viết vài dòng nha~");return;}
-  sendToGoogleForm(msg);
-  showFinal(msg);
+function fakeSkip() {
+    alert("😈 Không có chuyện đó đâu. Bắt buộc ghi!");
 }
-function skipGuestMessage(){
-  showFinal(defaultMessage);
-}
-function showFinal(text){
-  messageInputScreen.classList.add("hidden");
-  finalMessageScreen.classList.remove("hidden");
-  finalMessageScreen.innerHTML=`
-    <h1>💖 Một lời nhắn cho bạn</h1>
-    <p style="white-space:pre-line;max-width:500px;font-size:1.2em;">
-      ${text}
-    </p>
-    <div style="font-size:50px;">🐶💗🐶</div>`;
+
+function submitBook() {
+    const val = document.getElementById("bookInput").value.trim();
+    if (!val) {
+        alert("📚 Ghi vào đi màaa~");
+        return;
+    }
+
+    sendToGoogleForm(val);
+
+    const screen = document.getElementById("screen2");
+    screen.classList.add("explode");
+
+    setTimeout(() => {
+        screen.innerHTML = "<h1>💥 BOOM 💥</h1><p>Quà đã nhận và biến mất!</p>";
+    }, 600);
 }
 </script>
 
 </body>
 </html>
+
+
