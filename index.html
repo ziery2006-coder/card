@@ -2,198 +2,187 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Chúc mừng sinh nhật 🎂</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phỏng vấn 🎉</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: 'Comic Sans MS', sans-serif;
-    background: linear-gradient(135deg, #ffe6f0, #e6f7ff);
-    overflow: hidden;
-    text-align: center;
+/* ===== RESET ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ===== BODY ===== */
+body{
+  font-family:'Segoe UI','Comic Sans MS',sans-serif;
+  min-height:100vh;
+  background:linear-gradient(135deg,#ffd6e8,#d6f5ff,#e7ffd6);
+  background-size:300% 300%;
+  animation:bg 15s infinite;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 
-.screen {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+/* ===== SCREEN ===== */
+.screen{
+  position:absolute;
+  width:90%;
+  max-width:800px;
+  background:rgba(255,255,255,.9);
+  border-radius:30px;
+  padding:40px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  transition:.5s;
+}
+.hidden{opacity:0;pointer-events:none;transform:scale(.9)}
+
+/* ===== TEXT ===== */
+h1{
+  font-size:2.5rem;
+  color:#ff4d6d;
+  margin-bottom:20px;
+}
+.message{
+  font-size:1.2rem;
+  color:#444;
+  margin-bottom:30px;
+}
+.from{color:#666;margin-bottom:20px}
+
+/* ===== INPUT ===== */
+input{
+  padding:18px;
+  width:100%;
+  max-width:400px;
+  border-radius:15px;
+  border:2px solid #ff4d6d;
+  font-size:1.1rem;
+  outline:none;
 }
 
-h1 {
-    font-size: 2.5em;
-    color: #ff4d6d;
-    margin-bottom: 10px;
+/* ===== BUTTON ===== */
+.buttons{margin-top:25px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
+button{
+  padding:15px 35px;
+  border:none;
+  border-radius:50px;
+  background:#ff4d6d;
+  color:white;
+  font-size:1.1rem;
+  cursor:pointer;
+  transition:.3s;
 }
+button:hover{transform:scale(1.05)}
+.secondary{background:#7b68ee}
 
-.from {
-    font-size: 1.2em;
-    color: #555;
-    margin-bottom: 20px;
+/* ===== EFFECT ===== */
+.confetti{
+  position:fixed;
+  width:12px;
+  height:12px;
+  animation:fall 4s linear forwards;
 }
-
-.message {
-    font-size: 1.3em;
-    max-width: 600px;
-    margin-bottom: 30px;
-}
-
-.dog {
-    font-size: 80px;
-    animation: bounce 1.5s infinite;
-}
-
-@keyframes bounce {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
-
-button {
-    padding: 15px 30px;
-    font-size: 1.1em;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    margin: 10px;
-    background: #ff90b3;
-    color: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-button:hover {
-    transform: scale(1.05);
-}
-
-.big {
-    font-size: 1.4em;
-    padding: 20px 40px;
-    background: #ff4d6d;
-}
-
-.dog-rain {
-    position: absolute;
-    top: -50px;
-    font-size: 40px;
-    animation: fall linear forwards;
-}
-
-@keyframes fall {
-    to { transform: translateY(110vh); }
-}
-
-input {
-    padding: 15px;
-    font-size: 1.1em;
-    border-radius: 10px;
-    border: 2px solid #ff4d6d;
-    width: 280px;
-    margin-bottom: 20px;
-}
-
-.hidden {
-    display: none;
-}
-
-.explode {
-    animation: explode 1s forwards;
-}
-
-@keyframes explode {
-    0% { transform: scale(1); opacity: 1; }
-    100% { transform: scale(5); opacity: 0; }
+@keyframes fall{
+  to{transform:translateY(100vh) rotate(720deg);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<!-- SCREEN 1 -->
+<!-- ===== SCREEN 1 ===== -->
 <div class="screen" id="screen1">
-    <div class="dog">🐶</div>
-    <h1>Chúc mừng sinh nhật 🎉</h1>
-    <div class="from">Người gửi: <b>BẠN THÂN SIÊU CẤP</b></div>
-    <div class="message">
-        Chúc bạn tuổi mới luôn vui vẻ, ăn không béo, ngủ không mộng,
-        tiền vào như nước và luôn có chó con trong tim 🐕💖
-    </div>
-
-    <button onclick="dogRain()">🌧️ Mưa chó con</button>
-    <button class="big" onclick="openGift()">🎁 MỞ QUÀ SINH NHẬT</button>
+  <h1>🎉 Sinh nhật vui vẻ 🎉</h1>
+  <div class="from">From: <b>chúa tể loài vượn cổ</b></div>
+  <div class="message">
+    T không biết tặng m gì nên…<br>
+    m ghi thể loại sách m thích đi nhé 😏
+  </div>
+  <div class="buttons">
+    <button onclick="openGift()">Tiếp nè</button>
+  </div>
 </div>
 
-<!-- SCREEN 2 -->
+<!-- ===== SCREEN 2 ===== -->
 <div class="screen hidden" id="screen2">
-    <h1>📚 Quà bí mật nè</h1>
-    <p>Hãy ghi <b>1 thể loại sách bạn thích</b></p>
-    <input id="bookInput" placeholder="VD: Tiểu thuyết, fantasy...">
-    <div>
-        <button onclick="submitBook()">Gửi</button>
-        <button onclick="fakeSkip()">Không ghi gì</button>
-    </div>
+  <h1>📚 Nhập đi nè</h1>
+  <input id="bookInput" placeholder="Ví dụ: fantasy, tiểu thuyết...">
+  <div class="buttons">
+    <button class="secondary" onclick="alert('Không được trốn 😈')">Không ghi</button>
+    <button onclick="submitBook()">Gửi</button>
+  </div>
+</div>
+
+<!-- ===== SCREEN 3 ===== -->
+<div class="screen hidden" id="screen3">
+  <h1>✅ Xong rồi!</h1>
+  <div class="message" id="resultText"></div>
+  <button class="secondary" onclick="location.reload()">Làm lại</button>
 </div>
 
 <script>
-/* ===== GOOGLE FORM (TÙY CHỌN) ===== */
-const FORM_ID = "1FAIpQLSf9WI408WMOCyTLq_ansDAazkJWZOR6rL2NnArRcSJxaMhCKA";   // ví dụ: 1FAIpQLSfxxxx
-const ENTRY_ID = "1858201258";        // entry.xxxxx
+/* ===== GOOGLE FORM – CÁCH A ===== */
+const FORM_ID = "1FAIpQLSf9WI408WMOCyTLq_ansDAazkJWZOR6rL2NnArRcSJxaMhCKA";   // <-- THAY FORM ID
+const ENTRY_ID = "1858201258";      // <-- THAY ENTRY ID
 
 function sendToGoogleForm(value){
-    if (FORM_ID === "FORM_ID_CUA_BAN") return;
+  const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+  const data = new URLSearchParams();
+  data.append(`entry.${ENTRY_ID}`, value);
 
-    const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
-    const data = new URLSearchParams();
-    data.append(`entry.${ENTRY_ID}`, value);
-
-    fetch(url, {
-        method: "POST",
-        mode: "no-cors",
-        body: data
-    });
+  fetch(url,{
+    method:"POST",
+    mode:"no-cors",
+    body:data
+  });
 }
 
-/* ===== EFFECT ===== */
-function dogRain() {
-    for (let i = 0; i < 30; i++) {
-        let dog = document.createElement("div");
-        dog.innerText = "🐶";
-        dog.className = "dog-rain";
-        dog.style.left = Math.random() * 100 + "vw";
-        dog.style.animationDuration = (Math.random() * 2 + 2) + "s";
-        document.body.appendChild(dog);
-        setTimeout(() => dog.remove(), 4000);
-    }
+/* ===== LOGIC ===== */
+function openGift(){
+  document.getElementById("screen1").classList.add("hidden");
+  document.getElementById("screen2").classList.remove("hidden");
 }
 
-function openGift() {
-    document.getElementById("screen1").classList.add("hidden");
-    document.getElementById("screen2").classList.remove("hidden");
+function submitBook(){
+  const val = document.getElementById("bookInput").value.trim();
+  if(!val){
+    alert("📌 Nhập đi màaaa");
+    return;
+  }
+
+  // GỬI GOOGLE FORM
+  sendToGoogleForm(val);
+
+  document.getElementById("screen2").classList.add("hidden");
+  document.getElementById("screen3").classList.remove("hidden");
+  document.getElementById("resultText").innerHTML =
+    `📩 <b>${val}</b><br>Đã gửi về Google Form rồi nha 😎`;
+
+  confetti();
 }
 
-function fakeSkip() {
-    alert("😈 Không có chuyện đó đâu. Bắt buộc ghi!");
-}
-
-function submitBook() {
-    const val = document.getElementById("bookInput").value.trim();
-    if (!val) {
-        alert("📚 Ghi vào đi màaa~");
-        return;
-    }
-
-    sendToGoogleForm(val);
-
-    const screen = document.getElementById("screen2");
-    screen.classList.add("explode");
-
-    setTimeout(() => {
-        screen.innerHTML = "<h1>💥 BOOM 💥</h1><p>Quà đã nhận và biến mất!</p>";
-    }, 600);
+/* ===== CONFETTI ===== */
+function confetti(){
+  for(let i=0;i<120;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    c.style.animationDuration=Math.random()*2+2+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
 }
 </script>
 
 </body>
 </html>
+
+
 
 
