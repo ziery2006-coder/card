@@ -1,701 +1,198 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thiệp Sinh Nhật - Mưa Chó Con</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .birthday-card {
-            width: 100%;
-            max-width: 800px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Header với hình chó con */
-        .card-header {
-            background: linear-gradient(90deg, #FFB6C1 0%, #FFDAB9 100%);
-            padding: 30px;
-            text-align: center;
-            position: relative;
-            height: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        /* Container cho chó con chính */
-        .dog-container {
-            position: relative;
-            width: 300px;
-            height: 150px;
-            margin-top: 20px;
-        }
-
-        /* Chó con chính */
-        .dog {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 70px;
-            animation: dogMove 4s ease-in-out infinite;
-            z-index: 2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        /* Hiệu ứng di chuyển của chó */
-        @keyframes dogMove {
-            0%, 100% { 
-                transform: translateX(-50%) translateY(0) rotate(0deg);
-            }
-            25% { 
-                transform: translateX(-60%) translateY(-10px) rotate(-5deg);
-            }
-            50% { 
-                transform: translateX(-50%) translateY(-5px) rotate(0deg);
-            }
-            75% { 
-                transform: translateX(-40%) translateY(-10px) rotate(5deg);
-            }
-        }
-
-        /* Trái tim bay */
-        .heart {
-            position: absolute;
-            font-size: 20px;
-            color: #FF69B4;
-            opacity: 0;
-            z-index: 1;
-        }
-
-        .heart-1 {
-            top: 20px;
-            left: 40px;
-            animation: heartFloat 3s infinite 0.5s;
-        }
-
-        .heart-2 {
-            top: 40px;
-            right: 50px;
-            animation: heartFloat 3s infinite 1s;
-        }
-
-        .heart-3 {
-            top: 60px;
-            left: 60px;
-            animation: heartFloat 3s infinite 1.5s;
-        }
-
-        @keyframes heartFloat {
-            0% { 
-                opacity: 0; 
-                transform: translateY(0) scale(0.5); 
-            }
-            50% { 
-                opacity: 1; 
-                transform: translateY(-20px) scale(1); 
-            }
-            100% { 
-                opacity: 0; 
-                transform: translateY(-40px) scale(0.5); 
-            }
-        }
-
-        /* CƠN MƯA CHÓ */
-        .raining-dog {
-            position: absolute;
-            font-size: 30px;
-            pointer-events: none;
-            z-index: 5;
-            top: -50px;
-            opacity: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .dog-rain-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .card-title {
-            color: white;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            margin-bottom: 10px;
-            z-index: 3;
-        }
-
-        .title-dog {
-            animation: bounce 1s infinite alternate;
-            display: inline-block;
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
-
-        /* Phần nội dung chính - SIMPLIFIED */
-        .card-content {
-            padding: 40px;
-            position: relative;
-            z-index: 10;
-            background: white;
-        }
-
-        .message-display {
-            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
-            padding: 40px;
-            border-radius: 15px;
-            border: 2px dashed #FFB6C1;
-            text-align: center;
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin-bottom: 30px;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .birthday-message {
-            font-size: 1.5rem;
-            line-height: 1.8;
-            color: #333;
-        }
-
-        .to-name {
-            color: #FF6B6B;
-            font-weight: 800;
-            font-size: 2.2rem;
-            margin: 15px 0;
-            display: inline-block;
-            padding: 0 10px;
-            background: linear-gradient(120deg, #FFB6C1 30%, #FFDAB9 70%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .from-name {
-            color: #4ecdc4;
-            font-weight: 700;
-            margin-top: 25px;
-            font-size: 1.3rem;
-            display: inline-block;
-            padding: 5px 15px;
-            background: #f0f8ff;
-            border-radius: 10px;
-        }
-
-        /* Các nút điều khiển - Đơn giản hóa */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        button {
-            padding: 14px 28px;
-            border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 20;
-            position: relative;
-        }
-
-        .btn-rain {
-            background: linear-gradient(90deg, #FFA500 0%, #FFD700 100%);
-            color: white;
-        }
-
-        .btn-music {
-            background: #6c5ce7;
-            color: white;
-        }
-
-        .btn-gift {
-            background: linear-gradient(90deg, #FF6B6B 0%, #FF8E8E 100%);
-            color: white;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 14px rgba(0,0,0,0.1);
-        }
-
-        /* Phần quà tặng */
-        .gift-section {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px dashed #eee;
-        }
-
-        .gift-box {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #FFB6C1 0%, #FFDAB9 100%);
-            margin: 0 auto 20px;
-            border-radius: 10px;
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            color: white;
-            transition: transform 0.5s;
-            z-index: 10;
-        }
-
-        .gift-box:hover {
-            transform: scale(1.05) rotate(5deg);
-        }
-
-        .gift-message {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
-            border-radius: 10px;
-            font-size: 1.2rem;
-            color: #333;
-            border: 2px solid #FFA500;
-        }
-
-        /* Footer */
-        .card-footer {
-            text-align: center;
-            padding: 20px;
-            background: #f8f9fa;
-            color: #666;
-            font-size: 0.9rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Dog tail wag */
-        .tail {
-            position: absolute;
-            right: -15px;
-            bottom: 10px;
-            font-size: 30px;
-            transform-origin: left center;
-            animation: wagTail 0.3s infinite alternate;
-        }
-
-        @keyframes wagTail {
-            0% { transform: rotate(-30deg); }
-            100% { transform: rotate(30deg); }
-        }
-
-        /* Các loại chó khác nhau cho mưa */
-        .dog-type-1 { color: #FFB6C1; } /* Hồng nhạt */
-        .dog-type-2 { color: #FFDAB9; } /* Đào */
-        .dog-type-3 { color: #87CEEB; } /* Xanh da trời nhạt */
-        .dog-type-4 { color: #98FB98; } /* Xanh lá nhạt */
-        .dog-type-5 { color: #DDA0DD; } /* Mận */
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .card-title {
-                font-size: 2rem;
-            }
-            
-            .card-content {
-                padding: 20px;
-            }
-            
-            .controls {
-                flex-direction: column;
-            }
-            
-            button {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .dog-container {
-                width: 250px;
-                height: 120px;
-            }
-            
-            .dog {
-                font-size: 50px;
-            }
-            
-            .raining-dog {
-                font-size: 24px;
-            }
-            
-            .birthday-message {
-                font-size: 1.3rem;
-            }
-            
-            .to-name {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Happy Birthday 🐶🎂</title>
+<style>
+body{
+    margin:0;
+    font-family:'Comic Sans MS',sans-serif;
+    background:linear-gradient(135deg,#ffe6f0,#e6f7ff);
+    overflow:hidden;
+    text-align:center;
+}
+.screen{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+.hidden{display:none;}
+button{
+    padding:15px 30px;
+    margin:10px;
+    border:none;
+    border-radius:30px;
+    font-size:1.1em;
+    cursor:pointer;
+    background:#ff90b3;
+    color:white;
+}
+.big{font-size:1.4em;background:#ff4d6d;}
+canvas{
+    background:#fff;
+    border:4px dashed #ff90b3;
+    border-radius:20px;
+}
+input,textarea{
+    padding:15px;
+    font-size:1em;
+    border-radius:15px;
+    border:2px solid #ff4d6d;
+    width:300px;
+}
+.explode{animation:boom 1s forwards;}
+@keyframes boom{
+    to{transform:scale(5);opacity:0;}
+}
+</style>
 </head>
 <body>
-    <!-- Container cho mưa chó -->
-    <div class="dog-rain-container" id="dogRainContainer"></div>
-    
-    <div class="birthday-card">
-        <div class="card-header">
-            <h1 class="card-title">🐕 <span class="title-dog">Mưa</span> Chó Sinh Nhật! 🎂</h1>
-            <div class="dog-container">
-                <!-- Chó con chính -->
-                <div class="dog">🐕
-                    <span class="tail">🐕</span>
-                </div>
-                
-                <!-- Trái tim bay -->
-                <div class="heart heart-1">❤️</div>
-                <div class="heart heart-2">❤️</div>
-                <div class="heart heart-3">❤️</div>
-            </div>
-        </div>
-        
-        <div class="card-content">
-            <!-- PHẦN LỜI CHÚC ĐÃ ĐƯỢC ĐƠN GIẢN HÓA -->
-            <div class="message-display" id="messageDisplay">
-                <div class="birthday-message">
-                    🎉 Chúc mừng sinh nhật 🎉<br><br>
-                    
-                    Chúc <span class="to-name" id="displayRecipient">...</span><br>
-                    một ngày sinh nhật thật TUYỆT VỜI! 🥳<br><br>
-                    
-                    Mong rằng ngày hôm nay và cả năm tới<br>
-                    sẽ tràn ngập niềm vui, sức khỏe,<br>
-                    thành công và hạnh phúc! 🍀<br><br>
-                    
-                    <div class="from-name">
-                        Từ: <span id="displaySender">...</span> ❤️
-                    </div>
-                </div>
-            </div>
-            
-            <div class="controls">
-                <button class="btn-rain" id="rainBtn">
-                    <i class="fas fa-cloud-rain"></i> Mưa chó con!
-                </button>
-                <button class="btn-music" id="musicBtn">
-                    <i class="fas fa-music"></i> Bật nhạc
-                </button>
-                <button class="btn-gift" id="giftBtn">
-                    <i class="fas fa-gift"></i> Mở quà
-                </button>
-            </div>
-            
-            <div class="gift-section">
-                <h3><i class="fas fa-star"></i> Bấm vào hộp quà để nhận bất ngờ! <i class="fas fa-star"></i></h3>
-                <div class="gift-box" id="giftBox">
-                    🎁
-                </div>
-                <div class="gift-message" id="giftMessage">
-                    <strong>🎊 BẤT NGỜ SINH NHẬT! 🎊</strong><br><br>
-                    Món quà là một "CƠN BÃO CHÓ CON" dễ thương!<br>
-                    Chúc bạn có một ngày thật đặc biệt và đáng nhớ! 🥳🐕🌧️
-                </div>
-            </div>
-        </div>
-        
-        <div class="card-footer">
-            <p>Thiệp sinh nhật đặc biệt với "mưa chó" độc đáo | Chia sẻ niềm vui!</p>
-        </div>
-    </div>
 
-    <!-- Audio cho nhạc sinh nhật -->
-    <audio id="birthdayMusic" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-443.mp3" type="audio/mpeg">
-    </audio>
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8c2c6a9d7a.mp3">
+</audio>
 
-    <script>
-        // ========== BIẾN VÀ PHẦN TỬ DOM ==========
-        const displayRecipient = document.getElementById('displayRecipient');
-        const displaySender = document.getElementById('displaySender');
-        const rainBtn = document.getElementById('rainBtn');
-        const musicBtn = document.getElementById('musicBtn');
-        const giftBtn = document.getElementById('giftBtn');
-        const birthdayMusic = document.getElementById('birthdayMusic');
-        const giftBox = document.getElementById('giftBox');
-        const giftMessage = document.getElementById('giftMessage');
-        const dogRainContainer = document.getElementById('dogRainContainer');
-        const dogContainer = document.querySelector('.dog-container');
+<!-- SCREEN 1 -->
+<div class="screen" id="screen1">
+  <h1>🎉 Chúc mừng sinh nhật 🎉</h1>
+  <p>Muốn mở quà thì giúp chó về đích 🐶🏁</p>
+  <button onclick="toggleMusic()">🎵 Bật / Tắt nhạc</button>
+  <button class="big" onclick="startGame()">🐕 Chơi game</button>
+</div>
 
-        // ========== BIẾN TRẠNG THÁI ==========
-        let isMusicPlaying = false;
-        let isRaining = false;
-        let rainInterval;
-        let dogCount = 0;
-        const maxDogsOnScreen = 50;
+<!-- GAME -->
+<div class="screen hidden" id="gameScreen">
+  <h2>SPACE / chạm để nhảy</h2>
+  <canvas id="game" width="600" height="200"></canvas>
+</div>
 
-        // ========== DỮ LIỆU CHÓ ==========
-        const dogEmojis = ['🐕', '🐶', '🐩', '🦮', '🐕‍🦺'];
-        const dogTypes = ['dog-type-1', 'dog-type-2', 'dog-type-3', 'dog-type-4', 'dog-type-5'];
+<!-- BOOK -->
+<div class="screen hidden" id="giftScreen">
+  <h2>📚 Ghi 1 thể loại sách bạn thích</h2>
+  <input id="book" placeholder="VD: Tiểu thuyết...">
+  <div>
+    <button onclick="submitBook()">Gửi</button>
+    <button onclick="alert('😈 Không có chuyện đó đâu!')">Không ghi gì</button>
+  </div>
+</div>
 
-        // ========== HÀM TẠO CHÓ RƠI ==========
-        function createFallingDog() {
-            if (dogCount >= maxDogsOnScreen) return;
-            
-            dogCount++;
-            const rainingDog = document.createElement('div');
-            rainingDog.className = 'raining-dog';
-            
-            // Chọn ngẫu nhiên loại chó
-            const dogType = dogTypes[Math.floor(Math.random() * dogTypes.length)];
-            const dogEmoji = dogEmojis[Math.floor(Math.random() * dogEmojis.length)];
-            
-            rainingDog.classList.add(dogType);
-            rainingDog.innerHTML = dogEmoji;
-            
-            // Vị trí ngẫu nhiên
-            const startX = Math.random() * 100;
-            rainingDog.style.left = `${startX}vw`;
-            
-            // Kích thước ngẫu nhiên
-            const size = 20 + Math.random() * 40;
-            rainingDog.style.fontSize = `${size}px`;
-            
-            // Tốc độ rơi ngẫu nhiên
-            const fallDuration = 2000 + Math.random() * 3000;
-            
-            // Xoay ngẫu nhiên
-            const rotation = Math.random() * 360;
-            
-            // Thêm vào container
-            dogRainContainer.appendChild(rainingDog);
-            
-            // Animation rơi với xoay
-            const animation = rainingDog.animate([
-                { 
-                    top: '-50px', 
-                    opacity: 0, 
-                    transform: `rotate(0deg) scale(0.5)` 
-                },
-                { 
-                    top: '20%', 
-                    opacity: 1, 
-                    transform: `rotate(${rotation * 0.5}deg) scale(1)` 
-                },
-                { 
-                    top: '80%', 
-                    opacity: 0.8, 
-                    transform: `rotate(${rotation}deg) scale(0.8)` 
-                },
-                { 
-                    top: '100vh', 
-                    opacity: 0, 
-                    transform: `rotate(${rotation * 1.5}deg) scale(0.5)` 
-                }
-            ], {
-                duration: fallDuration,
-                easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
-            });
-            
-            // Khi animation kết thúc, xóa chó
-            animation.onfinish = () => {
-                rainingDog.remove();
-                dogCount--;
-            };
-            
-            return rainingDog;
-        }
+<!-- MESSAGE INPUT -->
+<div class="screen hidden" id="messageInputScreen">
+  <h2>💌 Bạn có muốn để lại lời nhắn cho người này không?</h2>
+  <textarea id="guestMessage" placeholder="Viết gì đó dễ thương nha~"></textarea>
+  <div>
+    <button onclick="submitGuestMessage()">Gửi lời nhắn</button>
+    <button onclick="skipGuestMessage()">Bỏ qua</button>
+  </div>
+</div>
 
-        // ========== CƠN MƯA CHÓ ==========
-        function startDogRain() {
-            if (isRaining) return;
-            
-            isRaining = true;
-            rainBtn.innerHTML = '<i class="fas fa-cloud-sun"></i> Dừng mưa';
-            rainBtn.style.background = 'linear-gradient(90deg, #FF6B6B 0%, #FF8E8E 100%)';
-            
-            // Tạo chó liên tục
-            rainInterval = setInterval(() => {
-                // Tạo 2-5 chó mỗi lần
-                const dogsToCreate = 2 + Math.floor(Math.random() * 4);
-                for (let i = 0; i < dogsToCreate; i++) {
-                    setTimeout(() => createFallingDog(), i * 100);
-                }
-            }, 300);
-            
-            // Tự động dừng sau 15 giây
-            setTimeout(() => {
-                if (isRaining) stopDogRain();
-            }, 15000);
-        }
+<!-- FINAL -->
+<div class="screen hidden" id="finalMessageScreen"></div>
 
-        function stopDogRain() {
-            if (!isRaining) return;
-            
-            isRaining = false;
-            clearInterval(rainInterval);
-            rainBtn.innerHTML = '<i class="fas fa-cloud-rain"></i> Mưa chó con!';
-            rainBtn.style.background = 'linear-gradient(90deg, #FFA500 0%, #FFD700 100%)';
-        }
+<script>
+/* ===== GOOGLE FORM ===== */
+const FORM_ID = "FORM_ID_CUA_BAN";
+const ENTRY_ID = "123456789";
 
-        // ========== SỰ KIỆN NÚT MƯA CHÓ ==========
-        rainBtn.addEventListener('click', () => {
-            if (isRaining) {
-                stopDogRain();
-            } else {
-                startDogRain();
-            }
-        });
+function sendToGoogleForm(message){
+  const url=`https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
+  const data=new URLSearchParams();
+  data.append(entry.${ENTRY_ID},message);
+  fetch(url,{method:"POST",mode:"no-cors",body:data});
+}
 
-        // ========== ĐIỀU KHIỂN NHẠC ==========
-        musicBtn.addEventListener('click', () => {
-            if (isMusicPlaying) {
-                birthdayMusic.pause();
-                musicBtn.innerHTML = '<i class="fas fa-music"></i> Bật nhạc';
-            } else {
-                birthdayMusic.play().catch(e => {
-                    console.log("Nhạc sinh nhật đã sẵn sàng!");
-                });
-                musicBtn.innerHTML = '<i class="fas fa-pause"></i> Tắt nhạc';
-            }
-            isMusicPlaying = !isMusicPlaying;
-        });
+/* ===== MUSIC ===== */
+function toggleMusic(){
+  const m=document.getElementById("music");
+  m.paused?m.play():m.pause();
+}
 
-        // ========== NÚT MỞ QUÀ ==========
-        giftBtn.addEventListener('click', () => {
-            giftBox.click(); // Kích hoạt hiệu ứng mở quà
-        });
+/* ===== GAME ===== */
+const c=document.getElementById("game");
+const ctx=c.getContext("2d");
+let dog={x:50,y:150,vy:0};
+let obs={x:600};
+let playing=false;
 
-        // ========== MỞ QUÀ ==========
-        giftBox.addEventListener('click', () => {
-            // Hiệu ứng hộp quà
-            giftBox.innerHTML = '🐕';
-            giftBox.style.background = 'linear-gradient(135deg, #87CEEB 0%, #00BFFF 100%)';
-            giftBox.style.transform = 'rotate(720deg) scale(1.3)';
-            
-            // Hiện thông điệp quà
-            setTimeout(() => {
-                giftMessage.style.display = 'block';
-                giftMessage.style.animation = 'fadeIn 1s';
-            }, 800);
-            
-            // Bắt đầu cơn mưa chó lớn
-            startDogRain();
-            
-            // Tạo thêm nhiều chó
-            for (let i = 0; i < 10; i++) {
-                setTimeout(() => createFallingDog(), i * 100);
-            }
-            
-            // Thay đổi tiêu đề
-            document.querySelector('.card-title').innerHTML = 
-                '🎉 <span class="title-dog">BÃO</span> CHÓ SINH NHẬT! 🎊';
-        });
+function startGame(){
+  screen1.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+  playing=true;
+  loop();
+}
+function loop(){
+  if(!playing) return;
+  ctx.clearRect(0,0,600,200);
+  dog.vy+=0.8; dog.y+=dog.vy;
+  if(dog.y>150){dog.y=150;dog.vy=0;}
+  obs.x-=4; if(obs.x<0) obs.x=600;
+  ctx.font="40px serif";
+  ctx.fillText("🐶",dog.x,dog.y);
+  ctx.fillText("🪵",obs.x,160);
+  ctx.fillText("🏁",520,160);
+  if(obs.x<dog.x+30 && obs.x>dog.x-30 && dog.y>130){
+    alert("💥 Thua rồi!");
+    obs.x=600;
+  }
+  if(dog.x>500){
+    playing=false;
+    gameScreen.classList.add("hidden");
+    giftScreen.classList.remove("hidden");
+    return;
+  }
+  dog.x+=1;
+  requestAnimationFrame(loop);
+}
+addEventListener("keydown",e=>{
+  if(e.code==="Space"&&dog.y>=150) dog.vy=-12;
+});
+addEventListener("touchstart",()=>{
+  if(dog.y>=150) dog.vy=-12;
+});
 
-        // ========== KHI TRANG LOAD XONG ==========
-        window.addEventListener('load', () => {
-            // Thêm hiệu ứng fade in cho toàn bộ card
-            document.querySelector('.birthday-card').style.animation = 'fadeIn 1s';
-            
-            // Tự động tạo một vài chú chó rơi khi mở trang
-            setTimeout(() => {
-                for (let i = 0; i < 3; i++) {
-                    setTimeout(() => createFallingDog(), i * 400);
-                }
-            }, 1500);
-            
-            // Hiệu ứng cho trái tim
-            setInterval(() => {
-                const hearts = document.querySelectorAll('.heart');
-                hearts.forEach(heart => {
-                    heart.style.animation = 'none';
-                    setTimeout(() => {
-                        heart.style.animation = 'heartFloat 3s infinite';
-                    }, 10);
-                });
-            }, 10000);
-        });
+/* ===== BOOK ===== */
+function submitBook(){
+  if(!book.value.trim()){
+    alert("📚 Ghi vào đi mà~"); return;
+  }
+  giftScreen.classList.add("explode");
+  setTimeout(()=>{
+    giftScreen.classList.add("hidden");
+    messageInputScreen.classList.remove("hidden");
+  },600);
+}
 
-        // ========== THÊM STYLE ANIMATION ==========
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            
-            .birthday-card {
-                animation: fadeIn 1s ease-out;
-            }
-            
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
-            }
-            
-            .to-name {
-                animation: pulse 2s infinite;
-            }
-        `;
-        document.head.appendChild(style);
+/* ===== MESSAGE ===== */
+const defaultMessage=`💌 Lời nhắn dành cho bạn
 
-        // ========== HƯỚNG DẪN CHỈNH SỬA CHO BẠN ==========
-        /*
-        ĐỂ CHỈNH TÊN NGƯỜI NHẬN VÀ NGƯỜI GỬI:
-        
-        1. Tìm dòng code này trong phần HTML (khoảng dòng 170-180):
-           <span class="to-name" id="displayRecipient">...</span>
-           
-        2. Thay dấu "..." bằng tên người nhận:
-           Ví dụ: <span class="to-name" id="displayRecipient">Minh</span>
-           
-        3. Tìm dòng code này:
-           <span id="displaySender">...</span>
-           
-        4. Thay dấu "..." bằng tên người gửi:
-           Ví dụ: <span id="displaySender">Hùng</span>
-           
-        5. Lưu file và mở lại để xem thay đổi.
-        */
-    </script>
+Chúc mừng sinh nhật 🎂
+Mong là hôm nay bạn thấy mình được yêu thương.
+Cứ là bạn thôi, thế là đủ rồi 🐶✨`;
+
+function submitGuestMessage(){
+  const msg=guestMessage.value.trim();
+  if(!msg){alert("💌 Viết vài dòng nha~");return;}
+  sendToGoogleForm(msg);
+  showFinal(msg);
+}
+function skipGuestMessage(){
+  showFinal(defaultMessage);
+}
+function showFinal(text){
+  messageInputScreen.classList.add("hidden");
+  finalMessageScreen.classList.remove("hidden");
+  finalMessageScreen.innerHTML=`
+    <h1>💖 Một lời nhắn cho bạn</h1>
+    <p style="white-space:pre-line;max-width:500px;font-size:1.2em;">
+      ${text}
+    </p>
+    <div style="font-size:50px;">🐶💗🐶</div>`;
+}
+</script>
+
 </body>
 </html>
