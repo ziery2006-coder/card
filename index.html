@@ -582,26 +582,19 @@ input:focus {
 
 <script>
 // ===== GOOGLE FORM CONFIGURATION =====
-// THAY ĐỔI CÁC GIÁ TRỊ NÀY THEO FORM CỦA BẠN
+
 const GOOGLE_FORM_CONFIG = {
-  // ID của Google Form (lấy từ URL: https://docs.google.com/forms/d/e/{FORM_ID}/viewform)
+ 
   formId: "1FAIpQLSf9WI408WMOCyTLq_ansDAazkJWZOR6rL2NnArRcSJxaMhCKA",
   
-  // Entry IDs của các trường (xem hướng dẫn bên dưới để lấy)
+ 
   entryIds: {
-    bookPreference: "entry.1858201258", // Thay bằng entry ID thực tế
-    timestamp: "entry.1858201258"       // Thay bằng entry ID thực tế
+    bookPreference: "entry.1858201258", 
+    timestamp: "entry.1858201258"       
   }
 };
 
-/**
- * HƯỚNG DẪN LẤY ENTRY ID:
- * 1. Tạo Google Form với các trường bạn cần
- * 2. Chuyển đến chế độ xem mã nguồn của form
- * 3. Tìm các thẻ input có name bắt đầu bằng "entry."
- * 4. Ví dụ: <input type="text" name="entry.1234567890">
- * 5. Số "1234567890" chính là entry ID
- */
+
 
 // ===== INITIALIZATION =====
 let userPreference = '';
@@ -953,6 +946,7 @@ modals.forEach(modalId => {
 
 </body>
 </html>
+
 
 
 
